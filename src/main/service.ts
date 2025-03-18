@@ -19,15 +19,12 @@ export class AppService {
       updateConfig(config);
     });
     registerScreenshot(this.screenshot, async (buffer, data) => {
-      const result = await translateAndReply(buffer);
-      // if (result) {
-      //   this.screenshot.$view.webContents.send('SCREENSHOTS:TRANSLATE_AND_REPLY', result);
-      //   this.browserWindow.webContents.send('MAIN:TRANSLATE_AND_REPLY', result);
-      // }
-      setTimeout(() => {
-        this.screenshot.$view.webContents.send('SCREENSHOTS:TRANSLATE_AND_REPLY', result);
-        this.browserWindow.webContents.send('MAIN:TRANSLATE_AND_REPLY', result);
-      }, 1000);
+      const result = (await translateAndReply(buffer)) ?? {
+        translate: [],
+        replies: []
+      };
+      this.screenshot.$view.webContents.send('SCREENSHOTS:TRANSLATE_AND_REPLY', result);
+      this.browserWindow.webContents.send('MAIN:TRANSLATE_AND_REPLY', result);
     });
   }
 }

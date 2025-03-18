@@ -48,7 +48,15 @@ export function ReplyView({ data, loading = false, onRetry, onConfirm }: ReplyVi
   if (!data) {
     return (
       <div className="reply-view-empty reply-container">
-        <Text>暂无数据</Text>
+        <Text>暂无数据 / 生成失败</Text>
+
+        <div className="reply-actions">
+          <Space>
+            <Button icon={<IconRefresh />} onClick={onRetry}>
+              重试
+            </Button>
+          </Space>
+        </div>
       </div>
     );
   }
