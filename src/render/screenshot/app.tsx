@@ -4,12 +4,6 @@ import Screenshots, { Bounds, Lang } from 'react-screenshots';
 import 'react-screenshots/lib/style.css';
 import './app.css';
 
-declare global {
-  interface Window {
-    screenshots: any;
-  }
-}
-
 export interface Display {
   id: number;
   x: number;

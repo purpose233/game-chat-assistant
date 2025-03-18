@@ -1,2 +1,6 @@
-// See the Electron documentation for details on how to use preload scripts:
-// https://www.electronjs.org/docs/latest/tutorial/process-model#preload-scripts
+import { contextBridge, ipcRenderer } from 'electron';
+import { IAppConfig } from '../../interface/config';
+
+contextBridge.exposeInMainWorld('electronAPI', {
+  updateConfig: (config: Partial<IAppConfig>) => ipcRenderer.send('CONFIG:UPDATE', config)
+});

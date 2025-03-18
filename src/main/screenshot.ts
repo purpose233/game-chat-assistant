@@ -7,7 +7,6 @@ export function registerScreenshot(
   onOk?: (buffer: Buffer, data: ScreenshotsData) => void
 ) {
   globalShortcut.register('CommandOrControl+T', () => {
-    console.log('开始截屏!!!!');
     screenshots.startCapture();
     screenshots.$view.webContents.openDevTools();
   });
@@ -18,26 +17,25 @@ export function registerScreenshot(
   // });
   // 点击确定按钮回调事件
   screenshots.on('ok', (e, buffer, data) => {
-    console.log('capture', buffer, data);
     onOk?.(buffer, data);
   });
   // 点击取消按钮回调事件
   screenshots.on('cancel', () => {
-    console.log('capture', 'cancel1');
+    // console.log('capture', 'cancel1');
   });
   screenshots.on('cancel', (e) => {
     // 执行了preventDefault
     // 点击取消不会关闭截图窗口
     e.preventDefault();
-    console.log('capture', 'cancel2');
+    // console.log('capture', 'cancel2');
   });
   // 点击保存按钮回调事件
   screenshots.on('save', (e, buffer, bounds) => {
-    console.log('capture', buffer, bounds);
+    // console.log('capture', buffer, bounds);
   });
   // 保存后的回调事件
   screenshots.on('afterSave', (e, buffer, bounds, isSaved) => {
-    console.log('capture', buffer, bounds);
-    console.log('isSaved', isSaved); // 是否保存成功
+    // console.log('capture', buffer, bounds);
+    // console.log('isSaved', isSaved); // 是否保存成功
   });
 }

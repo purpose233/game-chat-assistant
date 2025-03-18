@@ -8,10 +8,10 @@ function parseResult(result: string) {
   try {
     result = result.trim();
     if (result.startsWith('```json')) {
-      result = result.slice(6);
+      result = result.slice(7);
     }
     if (result.startsWith('```')) {
-      result = result.slice(1);
+      result = result.slice(3);
     }
     if (result.endsWith('```')) {
       result = result.slice(0, -3);
@@ -24,17 +24,17 @@ function parseResult(result: string) {
   }
 }
 
-export async function translateAndReply(image: Buffer): Promise<ITranslateAndReplyResult | null> {
+export async function translateAndReply(buffer: Buffer): Promise<ITranslateAndReplyResult | null> {
   const config = getConfig();
   const model = new ChatOpenAI({
-    model: 'gpt-4',
+    model: 'gpt-4o',
     openAIApiKey: config.gpt.apiKey,
     configuration: {
       baseURL: config.gpt.proxy
     }
   });
 
-  const base64String = image.toString('base64');
+  const base64String = Buffer.from(buffer).toString('base64');
   const dataUrl = `data:image/png;base64,${base64String}`;
 
   const messages = [
@@ -57,5 +57,7 @@ export async function translateAndReply(image: Buffer): Promise<ITranslateAndRep
   const textResult = Array.isArray(result.content)
     ? (result.content[0] as { text: string }).text ?? ''
     : result.content;
+
+  console.log('translateAndReply', textResult);
   return parseResult(textResult);
 }

@@ -5,8 +5,6 @@ export default (): Display => {
   const point = screen.getCursorScreenPoint();
   const { id, bounds, scaleFactor } = screen.getDisplayNearestPoint(point);
 
-  console.log('getDisplay!!!!!!', id, bounds, scaleFactor);
-
   // https://github.com/nashaofu/screenshots/issues/98
   return {
     id,

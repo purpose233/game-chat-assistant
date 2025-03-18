@@ -3,6 +3,7 @@ import Screenshots from '../libs/screenshot';
 import { registerScreenshot } from './screenshot';
 import { updateConfig } from './config';
 import { translateAndReply } from './gpt';
+import { IAppConfig } from '../interface/config';
 
 export class AppService {
   private browserWindow: BrowserWindow;
@@ -14,11 +15,10 @@ export class AppService {
   }
 
   public init() {
-    ipcMain.on('CONFIG:UPDATE', (event, config) => {
+    ipcMain.on('CONFIG:UPDATE', (event, config: Partial<IAppConfig>) => {
       updateConfig(config);
     });
     registerScreenshot(this.screenshot, async (buffer, data) => {
-      console.log('capture', buffer, data);
       const result = await translateAndReply(buffer);
       console.log('result', result);
       if (result) {
