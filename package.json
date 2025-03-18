@@ -55,6 +55,8 @@
     "electron-screenshots": "^0.5.27",
     "electron-squirrel-startup": "^1.0.1",
     "langchain": "^0.3.19",
+    "less": "^4.2.2",
+    "less-loader": "^12.2.0",
     "node-screenshots": "^0.2.1",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",

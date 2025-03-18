@@ -44,5 +44,8 @@ contextBridge.exposeInMainWorld('screenshots', {
     }
 
     ipcRenderer.off(`SCREENSHOTS:${channel}`, listener);
+  },
+  exit: () => {
+    ipcRenderer.send('SCREENSHOTS:exit');
   }
 });

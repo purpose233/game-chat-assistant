@@ -15,16 +15,19 @@ export class AppService {
   }
 
   public init() {
-    ipcMain.on('CONFIG:UPDATE', (event, config: Partial<IAppConfig>) => {
+    ipcMain.on('SERVICE:UPDATE_CONFIG', (event, config: Partial<IAppConfig>) => {
       updateConfig(config);
     });
     registerScreenshot(this.screenshot, async (buffer, data) => {
       const result = await translateAndReply(buffer);
-      console.log('result', result);
-      if (result) {
-        this.browserWindow.webContents.send('GPT:TRANSLATE_AND_REPLY', result);
-        this.screenshot.$view.webContents.send('GPT:TRANSLATE_AND_REPLY', result);
-      }
+      // if (result) {
+      //   this.screenshot.$view.webContents.send('SCREENSHOTS:TRANSLATE_AND_REPLY', result);
+      //   this.browserWindow.webContents.send('MAIN:TRANSLATE_AND_REPLY', result);
+      // }
+      setTimeout(() => {
+        this.screenshot.$view.webContents.send('SCREENSHOTS:TRANSLATE_AND_REPLY', result);
+        this.browserWindow.webContents.send('MAIN:TRANSLATE_AND_REPLY', result);
+      }, 1000);
     });
   }
 }

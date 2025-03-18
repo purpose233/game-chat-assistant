@@ -27,5 +27,14 @@ export const rules: Required<ModuleOptions>['rules'] = [
         transpileOnly: true
       }
     }
+  },
+  {
+    test: /\.less$/i,
+    use: [
+      // compiles Less to CSS
+      'style-loader',
+      'css-loader',
+      'less-loader'
+    ]
   }
 ];

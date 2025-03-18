@@ -334,6 +334,14 @@ export default class Screenshots extends Events {
     });
 
     /**
+     * EXIT事件
+     */
+    ipcMain.on('SCREENSHOTS:exit', () => {
+      this.logger('SCREENSHOTS:exit');
+      this.endCapture();
+    });
+
+    /**
      * SAVE事件
      */
     ipcMain.on('SCREENSHOTS:save', async (e, buffer: Buffer, data: ScreenshotsData) => {

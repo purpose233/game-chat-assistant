@@ -10,18 +10,15 @@ export function registerScreenshot(
     screenshots.startCapture();
     screenshots.$view.webContents.openDevTools();
   });
-  // globalShortcut.register('esc', () => {
-  //   if (screenshots.$win?.isFocused()) {
-  //     screenshots.endCapture();
-  //   }
-  // });
+  globalShortcut.register('F1', () => {
+    if (screenshots.$win?.isFocused()) {
+      screenshots.endCapture();
+    }
+  });
   // 点击确定按钮回调事件
   screenshots.on('ok', (e, buffer, data) => {
     onOk?.(buffer, data);
-  });
-  // 点击取消按钮回调事件
-  screenshots.on('cancel', () => {
-    // console.log('capture', 'cancel1');
+    e.preventDefault();
   });
   screenshots.on('cancel', (e) => {
     // 执行了preventDefault

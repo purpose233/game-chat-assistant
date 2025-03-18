@@ -1,100 +1,52 @@
-import { useCallback, useEffect, useState } from 'react';
-import Screenshots, { Bounds, Lang } from 'react-screenshots';
+import { ScreenshotView } from './views/screenshot';
+import { ITranslateAndReplyResult } from '../../interface/config';
+import { useEffect, useState } from 'react';
+import { ReplyView } from './views/reply';
+import { ScreenshotsData } from '../../libs/screenshot/interface';
 
-import 'react-screenshots/lib/style.css';
-import './app.css';
-
-export interface Display {
-  id: number;
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-}
+import './app.less';
 
 export function App(): JSX.Element {
-  const [url, setUrl] = useState<string | undefined>(undefined);
-  const [width, setWidth] = useState(window.innerWidth);
-  const [height, setHeight] = useState(window.innerHeight);
-  const [display, setDisplay] = useState<Display | undefined>(undefined);
-  const [lang, setLang] = useState<Lang | undefined>(undefined);
-
-  const onSave = useCallback(
-    async (blob: Blob | null, bounds: Bounds) => {
-      if (!display || !blob) {
-        return;
-      }
-      window.screenshots.save(await blob.arrayBuffer(), { bounds, display });
-    },
-    [display]
-  );
-
-  const onCancel = useCallback(() => {
-    window.screenshots.cancel();
-  }, []);
-
-  const onOk = useCallback(
-    async (blob: Blob | null, bounds: Bounds) => {
-      if (!display || !blob) {
-        return;
-      }
-      const buffer = await blob.arrayBuffer();
-      window.screenshots.ok(buffer, { bounds, display });
-    },
-    [display]
-  );
+  const [loading, setLoading] = useState(false);
+  const [context, setContext] = useState<{ buffer: ArrayBuffer; data: ScreenshotsData } | null>(null);
+  const [translateAndReply, setTranslateAndReply] = useState<ITranslateAndReplyResult | null>(null);
 
   useEffect(() => {
-    const onSetLang = (lang: Lang) => {
-      setLang(lang);
+    const onTranslateAndReply = (result: ITranslateAndReplyResult) => {
+      setTranslateAndReply(result);
+      setLoading(false);
     };
-
-    const onCapture = (display: Display, dataURL: string) => {
-      setDisplay(display);
-      setUrl(dataURL);
-    };
-
-    const onReset = () => {
-      setUrl(undefined);
-      setDisplay(undefined);
-      // 确保截图区域被重置
-      requestAnimationFrame(() => window.screenshots.reset());
-    };
-
-    window.screenshots.on('setLang', onSetLang);
-    window.screenshots.on('capture', onCapture);
-    window.screenshots.on('reset', onReset);
-    // 告诉主进程页面准备完成
-    window.screenshots.ready();
+    window.screenshots.on('TRANSLATE_AND_REPLY', onTranslateAndReply);
     return () => {
-      window.screenshots.off('capture', onCapture);
-      window.screenshots.off('setLang', onSetLang);
-      window.screenshots.off('reset', onReset);
+      window.screenshots.off('TRANSLATE_AND_REPLY', onTranslateAndReply);
     };
   }, []);
-
-  useEffect(() => {
-    const onResize = () => {
-      setWidth(window.innerWidth);
-      setHeight(window.innerHeight);
-    };
-
-    window.addEventListener('resize', onResize);
-    return () => {
-      window.removeEventListener('resize', onResize);
-    };
-  }, [onCancel]);
 
   return (
-    <div className="body">
-      <Screenshots
-        url={url}
-        width={width}
-        height={height}
-        lang={lang}
-        onSave={onSave}
-        onCancel={onCancel}
-        onOk={onOk}
+    <div className="container">
+      {!context && (
+        <ScreenshotView
+          onOk={(buffer, data) => {
+            setContext({ buffer, data });
+            setLoading(true);
+          }}
+        />
+      )}
+      <ReplyView
+        loading={loading}
+        data={translateAndReply}
+        onRetry={() => {
+          if (context) {
+            window.screenshots.ok(context.buffer, context.data);
+            setLoading(true);
+          }
+        }}
+        onConfirm={() => {
+          setTranslateAndReply(null);
+          setContext(null);
+          setLoading(false);
+          window.screenshots.exit();
+        }}
       />
     </div>
   );
