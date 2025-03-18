@@ -44,7 +44,8 @@ export function App(): JSX.Element {
       if (!display || !blob) {
         return;
       }
-      window.screenshots.ok(await blob.arrayBuffer(), { bounds, display });
+      const buffer = await blob.arrayBuffer();
+      window.screenshots.ok(buffer, { bounds, display });
     },
     [display]
   );

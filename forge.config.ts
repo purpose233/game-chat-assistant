@@ -25,19 +25,19 @@ const config: ForgeConfig = {
         config: rendererConfig,
         entryPoints: [
           {
-            html: './src/index.html',
-            js: './src/home/renderer.tsx',
+            html: './src/render/home/index.html',
+            js: './src/render/home/renderer.tsx',
             name: 'main_window',
             preload: {
-              js: './src/home/preload.ts'
+              js: './src/render/home/preload.ts'
             }
           },
           {
-            html: './src/screenshot.html',
-            js: './src/screenshot/renderer.tsx',
+            html: './src/render/screenshot/index.html',
+            js: './src/render/screenshot/renderer.tsx',
             name: 'screenshot_window',
             preload: {
-              js: './src/screenshot/preload.ts'
+              js: './src/render/screenshot/preload.ts'
             }
           }
         ]

@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
-import { ScreenshotsData } from './lib/interface';
+import { ScreenshotsData } from '../../libs/screenshot/interface';
 
 type IpcRendererListener = (event: IpcRendererEvent, ...args: unknown[]) => void;
 type ScreenshotsListener = (...args: unknown[]) => void;
