@@ -1,8 +1,11 @@
 import { globalShortcut } from 'electron';
 import Screenshots from '../libs/screenshot';
+import { ScreenshotsData } from '../libs/screenshot/interface';
 
-export function registerScreenshot() {
-  const screenshots = new Screenshots();
+export function registerScreenshot(
+  screenshots: Screenshots,
+  onOk?: (buffer: Buffer, data: ScreenshotsData) => void
+) {
   globalShortcut.register('CommandOrControl+T', () => {
     console.log('开始截屏!!!!');
     screenshots.startCapture();
@@ -14,8 +17,9 @@ export function registerScreenshot() {
   //   }
   // });
   // 点击确定按钮回调事件
-  screenshots.on('ok', (e, buffer, bounds) => {
-    console.log('capture', buffer, bounds);
+  screenshots.on('ok', (e, buffer, data) => {
+    console.log('capture', buffer, data);
+    onOk?.(buffer, data);
   });
   // 点击取消按钮回调事件
   screenshots.on('cancel', () => {
