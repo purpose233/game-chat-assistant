@@ -54,6 +54,7 @@
     "@langchain/openai": "^0.4.4",
     "electron-screenshots": "^0.5.27",
     "electron-squirrel-startup": "^1.0.1",
+    "json5": "^2.2.3",
     "langchain": "^0.3.19",
     "less": "^4.2.2",
     "less-loader": "^12.2.0",

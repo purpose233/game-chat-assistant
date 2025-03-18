@@ -3,11 +3,15 @@ import { HumanMessage, SystemMessage } from '@langchain/core/messages';
 import { SYSTEM_PROMPT___TRANSLATE_AND_REPLY, USER_PROMPT___TRANSLATE_AND_REPLY } from '../const/prompt';
 import { ITranslateAndReplyResult } from '../interface/config';
 import { getConfig } from './config';
+import json5 from 'json5';
 
 function parseResult(result: string) {
   try {
     result = result.trim();
     if (result.startsWith('```json')) {
+      result = result.slice(7);
+    }
+    if (result.startsWith('```JSON')) {
       result = result.slice(7);
     }
     if (result.startsWith('```')) {
@@ -16,7 +20,8 @@ function parseResult(result: string) {
     if (result.endsWith('```')) {
       result = result.slice(0, -3);
     }
-    const json = JSON.parse(result);
+    result = result.trim();
+    const json = json5.parse(result);
     return json;
   } catch (error) {
     console.error('parseResult error', error);
@@ -58,5 +63,6 @@ export async function translateAndReply(buffer: Buffer): Promise<ITranslateAndRe
     ? (result.content[0] as { text: string }).text ?? ''
     : result.content;
 
+  console.log('textResult', textResult);
   return parseResult(textResult);
 }
