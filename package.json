@@ -5,7 +5,7 @@
   "description": "My Electron application description",
   "main": ".webpack/main",
   "scripts": {
-    "start": "electron-forge start",
+    "start": "electron-forge start --enable-logging",
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
@@ -50,8 +50,11 @@
   "dependencies": {
     "@douyinfe/semi-icons": "~2.70.0",
     "@douyinfe/semi-ui": "~2.70.0",
+    "electron-screenshots": "^0.5.27",
     "electron-squirrel-startup": "^1.0.1",
+    "node-screenshots": "^0.2.1",
     "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react-dom": "^18.0.0",
+    "react-screenshots": "^0.5.22"
   }
 }

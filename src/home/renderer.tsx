@@ -26,7 +26,6 @@
  * ```
  */
 
-// Add this to the end of the existing file
 import { createRoot } from 'react-dom/client';
 import { App } from './app';
 
