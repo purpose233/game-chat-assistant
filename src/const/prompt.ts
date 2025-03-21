@@ -14,10 +14,16 @@ export const SYSTEM_PROMPT___TRANSLATE_AND_REPLY = `##Role
 输出：
 \`\`\`JSON
 {
+"origin": [
+  { "speaker": "purpose233", "message": "Noob Healer" },
+  { "speaker": "orangejuice", "message": "UR doing the worst on the team" },
+  { "speaker": "hunmix", "message": "멍청한 팀원들, 게임도 못하고 수다도 많다" }
+],
 "translate": [
-  { "speaker": "purpose233", message: "Noob Healer" },
-  { "speaker": "orangejuice", message: "UR doing the worst on the team" }
-]
+  { "speaker": "purpose233", "message": "菜鸡奶妈" },
+  { "speaker": "orangejuice", "message": "你们队伍最菜的" },
+  { "speaker": "hunmix", "message": "傻逼队友，打的又菜话又多" }
+],
 "replies": [
   { "en": "Focus on the game, not on trying to be a comedian.", "zh": "专注于游戏，而不是试图成为一个喜剧演员。" },
   { "en": "Sounds like you have some serious issues. Need a therapist?", "zh": "听起来你有一些严重的问题。需要心理医生吗？" },

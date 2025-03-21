@@ -12,6 +12,10 @@ export interface IAppConfig {
 }
 
 export interface ITranslateAndReplyResult {
+  origin: {
+    speaker: string;
+    message: string;
+  }[];
   translate: {
     speaker: string;
     message: string;

@@ -20,6 +20,7 @@ export class AppService {
     });
     registerScreenshot(this.screenshot, async (buffer, data) => {
       const result = (await translateAndReply(buffer)) ?? {
+        origin: [],
         translate: [],
         replies: []
       };
