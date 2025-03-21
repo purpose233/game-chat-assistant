@@ -16,9 +16,16 @@ export function App(): JSX.Element {
       setTranslateAndReply(result);
       setLoading(false);
     };
+    const onClose = () => {
+      setLoading(false);
+      setContext(null);
+      setTranslateAndReply(null);
+    };
     window.screenshots.on('TRANSLATE_AND_REPLY', onTranslateAndReply);
+    window.screenshots.on('CLOSE', onClose);
     return () => {
       window.screenshots.off('TRANSLATE_AND_REPLY', onTranslateAndReply);
+      window.screenshots.off('CLOSE', onClose);
     };
   }, []);
 

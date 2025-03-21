@@ -8,9 +8,10 @@ export function registerScreenshot(
 ) {
   globalShortcut.register('CommandOrControl+T', () => {
     screenshots.startCapture();
-    screenshots.$view.webContents.openDevTools();
+    // screenshots.$view.webContents.openDevTools();
   });
   globalShortcut.register('F1', () => {
+    screenshots.$view.webContents.send('SCREENSHOTS:CLOSE');
     if (screenshots.$win?.isFocused()) {
       screenshots.endCapture();
     }
@@ -23,7 +24,7 @@ export function registerScreenshot(
   screenshots.on('cancel', (e) => {
     // 执行了preventDefault
     // 点击取消不会关闭截图窗口
-    e.preventDefault();
+    // e.preventDefault();
     // console.log('capture', 'cancel2');
   });
   // 点击保存按钮回调事件

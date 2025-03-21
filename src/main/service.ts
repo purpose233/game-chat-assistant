@@ -11,7 +11,7 @@ export class AppService {
 
   constructor(browserWindow: BrowserWindow) {
     this.browserWindow = browserWindow;
-    this.screenshot = new Screenshots();
+    this.screenshot = new Screenshots({ singleWindow: false });
   }
 
   public init() {

@@ -42,12 +42,18 @@ export function Config() {
             />
             <Text strong>快捷键</Text>
           </div>
-          <Space>
-            <Tag color="blue" type="light">
+          <Space style={{ display: 'block', marginBottom: '8px' }}>
+            <Tag color="blue" type="light" style={{ marginRight: '2px' }}>
               <span style={{ fontFamily: 'monospace' }}>⌘ Command</span> +{' '}
               <span style={{ fontFamily: 'monospace' }}>T</span>
             </Tag>
             <Text>开始翻译</Text>
+          </Space>
+          <Space style={{ display: 'block' }}>
+            <Tag color="blue" type="light" style={{ marginRight: '2px' }}>
+              <span style={{ fontFamily: 'monospace' }}>F1</span>
+            </Tag>
+            <Text>关闭截屏/回复面板</Text>
           </Space>
         </div>
 
